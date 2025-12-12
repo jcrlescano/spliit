@@ -21,12 +21,12 @@ A free and open source expense splitting application built with .NET 10 and Angu
 ## Features
 
 - ✅ Clean Architecture with SOLID principles
-- ✅ Unit of Work pattern for transactions
-- ✅ Repository pattern for data access
-- ✅ Dependency Injection throughout
+- ✅ Unit of Work pattern for explicit transaction management
+- ✅ Repository pattern with direct DI injection
+- ✅ Dependency Injection throughout (no service locator anti-pattern)
 - ✅ Base entity with common properties (ID, CreatedAt, UpdatedAt, CreatedBy, UpdatedBy)
 - ✅ GUID-based IDs
-- ✅ PostgreSQL database
+- ✅ PostgreSQL database with EF Core
 - ✅ RESTful API
 - ✅ Health check endpoints
 
