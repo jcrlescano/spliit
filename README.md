@@ -1,127 +1,169 @@
-[<img alt="Spliit" height="60" src="https://github.com/spliit-app/spliit/blob/main/public/logo-with-text.png?raw=true" />](https://spliit.app)
+# Spliit - .NET & Angular Migration
 
-Spliit is a free and open source alternative to Splitwise. You can either use the official instance at [Spliit.app](https://spliit.app), or deploy your own instance:
+A free and open source expense splitting application built with .NET 10 and Angular.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fspliit-app%2Fspliit&project-name=my-spliit-instance&repository-name=my-spliit-instance&stores=%5B%7B%22type%22%3A%22postgres%22%7D%5D&)
+## Architecture
+
+### Backend (.NET 10)
+- **Clean Architecture** with separation of concerns
+- **Spliit.Core**: Domain entities, interfaces, enums
+- **Spliit.Application**: Business logic, services, DTOs
+- **Spliit.Infrastructure**: Data access, EF Core, repositories
+- **Spliit.Api**: REST API controllers, dependency injection
+
+### Frontend (Angular)
+- **Feature-based structure** with lazy loading
+- **PrimeNG** for UI components
+- **Tailwind CSS** for styling
+- **Reactive Forms** for form handling
+- **HttpClient** for API communication
 
 ## Features
 
-- [x] Create a group and share it with friends
-- [x] Create expenses with description
-- [x] Display group balances
-- [x] Create reimbursement expenses
-- [x] Progressive Web App
-- [x] Select all/no participant for expenses
-- [x] Split expenses unevenly [(#6)](https://github.com/spliit-app/spliit/issues/6)
-- [x] Mark a group as favorite [(#29)](https://github.com/spliit-app/spliit/issues/29)
-- [x] Tell the application who you are when opening a group [(#7)](https://github.com/spliit-app/spliit/issues/7)
-- [x] Assign a category to expenses [(#35)](https://github.com/spliit-app/spliit/issues/35)
-- [x] Search for expenses in a group [(#51)](https://github.com/spliit-app/spliit/issues/51)
-- [x] Upload and attach images to expenses [(#63)](https://github.com/spliit-app/spliit/issues/63)
-- [x] Create expense by scanning a receipt [(#23)](https://github.com/spliit-app/spliit/issues/23)
+- ✅ Clean Architecture with SOLID principles
+- ✅ Unit of Work pattern for transactions
+- ✅ Repository pattern for data access
+- ✅ Dependency Injection throughout
+- ✅ Base entity with common properties (ID, CreatedAt, UpdatedAt, CreatedBy, UpdatedBy)
+- ✅ GUID-based IDs
+- ✅ PostgreSQL database
+- ✅ RESTful API
+- ✅ Health check endpoints
 
-### Possible incoming features
+## Prerequisites
 
-- [ ] Ability to create recurring expenses [(#5)](https://github.com/spliit-app/spliit/issues/5)
-- [ ] Import expenses from Splitwise [(#22)](https://github.com/spliit-app/spliit/issues/22)
+- .NET 10 SDK
+- Node.js 18+
+- PostgreSQL 14+
+- Angular CLI
 
-## Stack
+## Getting Started
 
-- [Next.js](https://nextjs.org/) for the web application
-- [TailwindCSS](https://tailwindcss.com/) for the styling
-- [shadcn/UI](https://ui.shadcn.com/) for the UI components
-- [Prisma](https://prisma.io) to access the database
-- [Vercel](https://vercel.com/) for hosting (application and database)
+### Backend Setup
 
-## Contribute
-
-The project is open to contributions. Feel free to open an issue or even a pull-request! 
-Join the discussion in [the Spliit Discord server](https://discord.gg/YSyVXbwvSY).
-
-If you want to contribute financially and help us keep the application free and without ads, you can also:
-
-- 💜 [Sponsor me (Sebastien)](https://github.com/sponsors/scastiel), or
-- 💙 [Make a small one-time donation](https://donate.stripe.com/28o3eh96G7hH8k89Ba).
-
-### Translation
-
-The project's translations are managed using [our Weblate project](https://hosted.weblate.org/projects/spliit/spliit/). 
-You can easily add missing translations to the project or even add a new language!
-Here is the current state of translation:
-
-<a href="https://hosted.weblate.org/engage/spliit/">
-<img src="https://hosted.weblate.org/widget/spliit/spliit/multi-auto.svg" alt="Translation status" />
-</a>
-
-## Run locally
-
-1. Clone the repository (or fork it if you intend to contribute)
-2. Start a PostgreSQL server. You can run `./scripts/start-local-db.sh` if you don’t have a server already.
-3. Copy the file `.env.example` as `.env`
-4. Run `npm install` to install dependencies. This will also apply database migrations and update Prisma Client.
-5. Run `npm run dev` to start the development server
-
-## Run in a container
-
-1. Run `npm run build-image` to build the docker image from the Dockerfile
-2. Copy the file `container.env.example` as `container.env`
-3. Run `npm run start-container` to start the postgres and the spliit2 containers
-4. You can access the app by browsing to http://localhost:3000
-
-## Health check
-
-The application has a health check endpoint that can be used to check if the application is running and if the database is accessible.
-
-- `GET /api/health/readiness` or `GET /api/health` - Check if the application is ready to serve requests, including database connectivity.
-- `GET /api/health/liveness` - Check if the application is running, but not necessarily ready to serve requests.
-
-## Opt-in features
-
-### Expense documents
-
-Spliit offers users to upload images (to an AWS S3 bucket) and attach them to expenses. To enable this feature:
-
-- Follow the instructions in the _S3 bucket_ and _IAM user_ sections of [next-s3-upload](https://next-s3-upload.codingvalue.com/setup#s3-bucket) to create and set up an S3 bucket where images will be stored.
-- Update your environments variables with appropriate values:
-
-```.env
-NEXT_PUBLIC_ENABLE_EXPENSE_DOCUMENTS=true
-S3_UPLOAD_KEY=AAAAAAAAAAAAAAAAAAAA
-S3_UPLOAD_SECRET=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-S3_UPLOAD_BUCKET=name-of-s3-bucket
-S3_UPLOAD_REGION=us-east-1
+1. Navigate to backend directory:
+```bash
+cd backend
 ```
 
-You can also use other S3 providers by providing a custom endpoint:
+2. Update connection string in `src/Spliit.Api/appsettings.json`
 
-```.env
-S3_UPLOAD_ENDPOINT=http://localhost:9000
+3. Install EF Core tools:
+```bash
+dotnet tool install --global dotnet-ef
 ```
 
-### Create expense from receipt
-
-You can offer users to create expense by uploading a receipt. This feature relies on [OpenAI GPT-4 with Vision](https://platform.openai.com/docs/guides/vision) and a public S3 storage endpoint.
-
-To enable the feature:
-
-- You must enable expense documents feature as well (see section above). That might change in the future, but for now we need to store images to make receipt scanning work.
-- Subscribe to OpenAI API and get access to GPT 4 with Vision (you might need to buy credits in advance).
-- Update your environment variables with appropriate values:
-
-```.env
-NEXT_PUBLIC_ENABLE_RECEIPT_EXTRACT=true
-OPENAI_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+4. Create database migration:
+```bash
+cd src/Spliit.Infrastructure
+dotnet ef migrations add InitialCreate --startup-project ../Spliit.Api
+dotnet ef database update --startup-project ../Spliit.Api
 ```
 
-### Deduce category from title
-
-You can offer users to automatically deduce the expense category from the title. Since this feature relies on a OpenAI subscription, follow the signup instructions above and configure the following environment variables:
-
-```.env
-NEXT_PUBLIC_ENABLE_CATEGORY_EXTRACT=true
-OPENAI_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+5. Run the API:
+```bash
+cd ../Spliit.Api
+dotnet run
 ```
+
+API will be available at `http://localhost:5000`
+
+### Frontend Setup
+
+1. Navigate to frontend directory:
+```bash
+cd frontend
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Run the application:
+```bash
+npm start
+```
+
+Application will be available at `http://localhost:4200`
+
+## Project Structure
+
+```
+backend/
+├── src/
+│   ├── Spliit.Core/           # Domain layer
+│   │   ├── Common/            # Base entities
+│   │   ├── Entities/          # Domain entities
+│   │   ├── Enums/             # Enumerations
+│   │   └── Interfaces/        # Repository interfaces
+│   ├── Spliit.Application/    # Application layer
+│   │   ├── DTOs/              # Data transfer objects
+│   │   ├── Interfaces/        # Service interfaces
+│   │   └── Services/          # Business logic
+│   ├── Spliit.Infrastructure/ # Infrastructure layer
+│   │   ├── Data/              # DbContext, UnitOfWork
+│   │   └── Repositories/      # Repository implementations
+│   └── Spliit.Api/            # Presentation layer
+│       └── Controllers/       # API controllers
+
+frontend/
+├── src/
+│   ├── app/
+│   │   ├── core/              # Core services and models
+│   │   │   ├── models/        # TypeScript interfaces
+│   │   │   └── services/      # API services
+│   │   ├── features/          # Feature modules
+│   │   │   ├── groups/        # Groups feature
+│   │   │   └── expenses/      # Expenses feature
+│   │   └── shared/            # Shared components
+│   └── environments/          # Environment configs
+```
+
+## API Endpoints
+
+### Groups
+- `GET /api/groups` - Get all groups
+- `GET /api/groups/{id}` - Get group by ID
+- `POST /api/groups` - Create group
+- `PUT /api/groups/{id}` - Update group
+- `DELETE /api/groups/{id}` - Delete group
+
+### Expenses
+- `GET /api/expenses/{id}` - Get expense by ID
+- `GET /api/expenses/group/{groupId}` - Get expenses by group
+- `POST /api/expenses` - Create expense
+- `PUT /api/expenses/{id}` - Update expense
+- `DELETE /api/expenses/{id}` - Delete expense
+
+### Health
+- `GET /api/health` - Readiness check
+- `GET /api/health/liveness` - Liveness check
+
+## Database Design
+
+All entities inherit from `BaseEntity` with common properties:
+- `Id` (Guid) - Primary key
+- `CreatedAt` (DateTime) - Creation timestamp
+- `CreatedBy` (string) - Creator identifier
+- `UpdatedAt` (DateTime?) - Last update timestamp
+- `UpdatedBy` (string?) - Last updater identifier
+
+## Technologies
+
+### Backend
+- .NET 10
+- Entity Framework Core 10
+- Npgsql (PostgreSQL provider)
+- ASP.NET Core Web API
+
+### Frontend
+- Angular 19
+- PrimeNG 17
+- Tailwind CSS 3
+- RxJS 7
+- TypeScript 5
 
 ## License
 
-MIT, see [LICENSE](./LICENSE).
+MIT

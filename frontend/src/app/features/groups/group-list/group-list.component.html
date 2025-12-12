@@ -1,0 +1,39 @@
+<div class="px-4 sm:px-6 lg:px-8">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-2xl font-semibold text-gray-900">Groups</h1>
+      <p class="mt-2 text-sm text-gray-700">Manage your expense groups</p>
+    </div>
+    <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+      <button pButton type="button" label="Create Group" icon="pi pi-plus" (click)="showCreateDialog()"></button>
+    </div>
+  </div>
+
+  <div class="mt-8">
+    <p-table [value]="groups" [tableStyle]="{'min-width': '50rem'}">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Currency</th>
+          <th>Created At</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-group>
+        <tr>
+          <td>{{ group.name }}</td>
+          <td>{{ group.currency }}</td>
+          <td>{{ group.createdAt | date }}</td>
+          <td>
+            <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text" (click)="showEditDialog(group)"></button>
+            <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" (click)="deleteGroup(group.id)"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-dialog [(visible)]="displayDialog" [modal]="true" [style]="{width: '450px'}" [header]="selectedGroup ? 'Edit Group' : 'Create Group'">
+  <app-group-form [group]="selectedGroup" (saved)="onGroupSaved()"></app-group-form>
+</p-dialog>

@@ -1,0 +1,27 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="space-y-4">
+    <div>
+      <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+      <input pInputText id="name" formControlName="name" class="w-full mt-1" />
+    </div>
+
+    <div>
+      <label for="information" class="block text-sm font-medium text-gray-700">Information</label>
+      <textarea pInputTextarea id="information" formControlName="information" rows="3" class="w-full mt-1"></textarea>
+    </div>
+
+    <div>
+      <label for="currency" class="block text-sm font-medium text-gray-700">Currency Symbol</label>
+      <input pInputText id="currency" formControlName="currency" class="w-full mt-1" />
+    </div>
+
+    <div>
+      <label for="currencyCode" class="block text-sm font-medium text-gray-700">Currency Code</label>
+      <input pInputText id="currencyCode" formControlName="currencyCode" class="w-full mt-1" />
+    </div>
+
+    <div class="flex justify-end gap-2 mt-6">
+      <button pButton type="submit" label="Save" [disabled]="!form.valid"></button>
+    </div>
+  </div>
+</form>

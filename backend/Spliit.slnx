@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Spliit.Api/Spliit.Api.csproj" />
+    <Project Path="src/Spliit.Application/Spliit.Application.csproj" />
+    <Project Path="src/Spliit.Core/Spliit.Core.csproj" />
+    <Project Path="src/Spliit.Infrastructure/Spliit.Infrastructure.csproj" />
+  </Folder>
+</Solution>
